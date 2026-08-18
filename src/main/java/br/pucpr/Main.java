@@ -41,6 +41,6 @@ public class Main {
     System.out.println();
     System.out.println("IMPRIMINDO PLANETAS");
     System.out.println("-------------------");
-    new PlanetasPrinter().print(planetas, false, Theme.NORMAL);
+    new PlanetasPrinter().print(planetas, true, Theme.NORMAL);
   }
 }

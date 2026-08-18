@@ -1,9 +1,15 @@
 package br.pucpr.planet;
 
 import br.pucpr.user.Theme;
+
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class PlanetasPrinter {
+  private static final double KM_POR_UA = 149_600_000.0;
+
   public void print(ArrayList<Planet> planets, boolean alignRight, Theme theme) {
     if (planets == null || planets.isEmpty()) {
       System.out.println("ERRO: Lista de planetas vazia ou nula.");
@@ -12,10 +18,10 @@ public class PlanetasPrinter {
     final var borderChar = theme.getBorderChar();
 
     // Borda superior e cabeçalho
-    final var BORDER_WIDTH = 74;
+    final var BORDER_WIDTH = 91;
     var sb = new StringBuilder();
     sb.repeat(borderChar, BORDER_WIDTH).append("\n");
-    sb.append(String.format("| %-5s | %-20s | %-22s | %-22s |%n", "NOME", "DIAMETRO", "DISTANCIA DO SOL", "TIPO"));
+    sb.append(String.format("| %-15s | %-15s | %-15s | %-15s | %-15s |%n", "Nome", "Diâmetro", "Dist. sol (km)", "Dist. sol (ua)", "Tipo"));
     sb.repeat(borderChar, BORDER_WIDTH).append("\n");
     for (var planet : planets) {
       if (planet == null) {
@@ -23,10 +29,11 @@ public class PlanetasPrinter {
       }
       sb.append(
           String.format(
-              "| %-5s | %-20s | %-22s | %-22s |%n",
+              "| %-15s | %-15s | %-15s | %-15s | %-15s |%n",
               formatName(planet),
               formatDiameterKm(planet.diameterKm()),
               formatSunDistanceKm(planet.sunDistanceKm()),
+              formatUa(planet.sunDistanceKm()),
               formatType(planet.type())));
     }
     // Borda inferior
@@ -44,7 +51,9 @@ public class PlanetasPrinter {
   }
 
   private static String formatDiameterKm(double diameterKm) {
-    return String.format("%.2f", diameterKm);
+    var format =
+        new DecimalFormat("#,##0.0", DecimalFormatSymbols.getInstance(Locale.of("pt", "BR")));
+    return format.format(diameterKm);
   }
 
     private static String formatSunDistanceKm(long sunDistanceKm) {
@@ -60,6 +69,12 @@ public class PlanetasPrinter {
       name = name.substring(0, 17) + "...";
     }
     return name;
+  }
+
+  private static String formatUa(long sunDistanceKm) {
+    var format =
+        new DecimalFormat("#,##0.00", DecimalFormatSymbols.getInstance(Locale.of("pt", "BR")));
+    return format.format(sunDistanceKm / KM_POR_UA);
   }
 
     private static String formatType(PlanetType type) {

@@ -39,3 +39,9 @@ Ao final da implementação reflita:
 javac PlanetasPrinter.java
 java PlanetasPrinter
 ```
+
+## Reflexão
+
+1. **Sim.** Existe código duplicado nos `Printers`. Mesmo que não haja uma cópia exata do código, as duas classes possuem muitas semelhanças em sua estrutura e implementação.
+
+2. **Sim.** Uma alternativa seria fazer com que a classe estendesse `TablePrinter`, evitando a duplicação da lógica responsável pela impressão da tabela. Porém, outras partes do código ainda precisariam ser repetidas.
