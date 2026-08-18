@@ -15,7 +15,7 @@ public class PlanetasPrinter {
     final var BORDER_WIDTH = 74;
     var sb = new StringBuilder();
     sb.repeat(borderChar, BORDER_WIDTH).append("\n");
-    sb.append(String.format("| %-5s | %-20s | %-22s | %-14s |%n", "ID", "NOME", "EMAIL", "CPF"));
+    sb.append(String.format("| %-5s | %-20s | %-22s | %-22s |%n", "NOME", "DIAMETRO", "DISTANCIA DO SOL", "TIPO"));
     sb.repeat(borderChar, BORDER_WIDTH).append("\n");
     for (var planet : planets) {
       if (planet == null) {
@@ -23,11 +23,11 @@ public class PlanetasPrinter {
       }
       sb.append(
           String.format(
-              "| %-5s | %-20s | %-22s | %-14s |%n",
+              "| %-5s | %-20s | %-22s | %-22s |%n",
               formatName(planet),
               formatDiameterKm(planet.diameterKm()),
-              formatSunDistanceKm(planet.sunDistanceKm())));
-              formatType(planet.type());
+              formatSunDistanceKm(planet.sunDistanceKm()),
+              formatType(planet.type())));
     }
     // Borda inferior
     sb.repeat(borderChar, BORDER_WIDTH).append("\n");
@@ -69,4 +69,5 @@ public class PlanetasPrinter {
       case ICE -> "Gelado";
       case DWARF -> "Anão";
     };
+}
 }
